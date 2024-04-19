@@ -384,63 +384,83 @@
         [d setObject:[r dataValues] forKey:@"DataValues"];
 }
 
-- (IBAction) exportData:(id) sender
-{
-	if([curROI type]==tPlain)
-	{
-		NSInteger confirm = NSRunInformationalAlertPanel(NSLocalizedString(@"Export to XML", @""), NSLocalizedString(@"Exporting this kind of ROI to XML will only export the contour line.", @""), NSLocalizedString(@"OK", @""), NSLocalizedString(@"Cancel", @""), nil);
-		if(!confirm) return;
-	}
-	else if([curROI type]==tLayerROI)
-	{
-		NSRunAlertPanel(NSLocalizedString(@"Export to XML", @""), NSLocalizedString(@"This kind of ROI can not be exported to XML.", @""), NSLocalizedString(@"OK", @""), nil, nil);
-		return;
-	}
-	
-	NSSavePanel *panel = [NSSavePanel savePanel];
-    panel.canSelectHiddenExtension = NO;
-    panel.allowedFileTypes = @[@"xml"];
-    panel.nameFieldStringValue = curROI.name;
-    
-    [panel beginWithCompletionHandler:^(NSInteger result) {
-        if (result != NSFileHandlingPanelOKButton)
-            return;
+- (NSArray *)roiLoadSimpleFromSeries:(NSString *)filename {
+    NSMutableArray *allROIsWithSlices = [NSMutableArray array];
+    NSArray *roisMovies = [NSUnarchiver unarchiveObjectWithFile:filename];
+    if (!roisMovies) {
+        NSLog(@"Failed to unarchive ROIs from file: %@", filename);
+        return allROIsWithSlices; // Return the empty array or handle the error as appropriate
+    }
 
-        NSMutableDictionary *xml = [NSMutableDictionary dictionary];
-		
-		if( [self allWithSameName])
-		{
-			NSArray *roiSeriesList = [curController roiList];
-			NSMutableArray *roiArray = [NSMutableArray array];
-			
-			int i;			
-			for ( i = 0; i < [roiSeriesList count]; i++ )
-			{
-				NSArray *roiImageList = [roiSeriesList objectAtIndex: i];
-				
-				for( ROI *roi in roiImageList )
-				{
-					if ( [[roi name] isEqualToString: [curROI name]])
-					{
-						NSMutableDictionary *roiData = [NSMutableDictionary dictionary];
-						
-                        [ROIWindow addROIValues: roi dictionary: roiData];
-						[roiData setObject:[NSNumber numberWithInt: i + 1] forKey: @"Slice"];
-						
-						[roiArray addObject: roiData];
-					}
-				}
-			}
-			
-			[xml setObject: roiArray forKey: @"ROI array"];
-		}
-		
-		else // Output curROI only
-            [ROIWindow addROIValues: curROI dictionary: xml];
-		
-		[xml writeToURL:panel.URL atomically:YES];
-    }];
+    // Iterate through each series (considered as slices)
+    for (NSInteger sliceIndex = 0; sliceIndex < [roisMovies count]; sliceIndex++) {
+        NSArray *roisSeries = [roisMovies objectAtIndex:sliceIndex];
+        
+        // Ensuring to check each inner array for ROIs
+        for (NSInteger i = 0; i < [roisSeries count]; i++) {
+            NSArray *roisImages = [roisSeries objectAtIndex:i];
+            if ([roisImages count] > 0) {
+                for (ROI *roi in roisImages) {
+                    NSMutableDictionary *roiWithSliceInfo = [NSMutableDictionary dictionary];
+                    [ROIWindow addROIValues:roi dictionary:roiWithSliceInfo];
+                    [roiWithSliceInfo setObject:[NSNumber numberWithInteger:i + 1] forKey:@"Slice"];
+                    [allROIsWithSlices addObject:roiWithSliceInfo];
+                }
+            }
+        }
+    }
+    
+    return allROIsWithSlices;
 }
+
+
+
+
+- (IBAction)exportData:(id)sender {
+    NSOpenPanel *openPanel = [NSOpenPanel openPanel];
+    openPanel.allowedFileTypes = @[@"roi", @"rois_series"];
+    openPanel.prompt = NSLocalizedString(@"Open ROI File", @"");
+
+    if ([openPanel runModal] != NSModalResponseOK) return;
+
+    NSString *filePath = openPanel.URL.path;
+    NSString *fileExtension = [filePath pathExtension];
+    NSArray *roiDataArray = nil;
+
+    if ([fileExtension isEqualToString:@"roi"]) {
+        roiDataArray = [NSUnarchiver unarchiveObjectWithFile:filePath];
+        // Assuming the .roi files return ROI objects, not dictionaries
+        NSMutableArray *xmlArray = [NSMutableArray array];
+        for (ROI *roi in roiDataArray) {
+            NSMutableDictionary *roiDict = [NSMutableDictionary dictionary];
+            [ROIWindow addROIValues:roi dictionary:roiDict];
+            [xmlArray addObject:roiDict];
+        }
+        roiDataArray = xmlArray; // Update roiDataArray with the processed dictionaries
+    } else if ([fileExtension isEqualToString:@"rois_series"]) {
+        // Use the simplified loading method
+        roiDataArray = [self roiLoadSimpleFromSeries:filePath];
+        // Assuming these are already dictionaries, no further transformation needed
+    }
+
+    if (!roiDataArray || roiDataArray.count == 0) {
+        NSRunAlertPanel(NSLocalizedString(@"Error", @""), NSLocalizedString(@"No ROIs found or unsupported file type.", @""), NSLocalizedString(@"OK", @""), nil, nil);
+        return;
+    }
+
+    NSString *xmlPath = [[filePath stringByDeletingPathExtension] stringByAppendingString:@".xml"];
+    NSDictionary *xmlDict = @{@"ROIArray": roiDataArray};
+    BOOL success = [xmlDict writeToURL:[NSURL fileURLWithPath:xmlPath] atomically:YES];
+
+    if (success) {
+        NSRunInformationalAlertPanel(NSLocalizedString(@"Export Successful", @""), @"%@", [NSString stringWithFormat:NSLocalizedString(@"XML file saved as %@", @""), xmlPath], NSLocalizedString(@"OK", @""), nil, nil);
+    } else {
+        NSRunAlertPanel(NSLocalizedString(@"Error", @""), NSLocalizedString(@"Failed to save the XML file.", @""), NSLocalizedString(@"OK", @""), nil, nil);
+    }
+}
+
+
+
 
 - (IBAction) histogram:(id) sender
 {

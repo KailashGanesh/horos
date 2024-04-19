@@ -84,5 +84,6 @@
 - (void) setROI: (ROI*) iroi :(ViewerController*) c;
 - (BOOL) allWithSameName;
 - (void) windowWillClose:(NSNotification *)notification;
+- (NSArray *)roiLoadSimpleFromSeries:(NSString *)filename;
 
 @end

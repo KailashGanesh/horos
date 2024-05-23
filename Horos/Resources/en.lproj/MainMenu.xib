@@ -1550,6 +1550,11 @@
                                     <action selector="roiSaveSeries:" target="-1" id="13659"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Bulk Convert ROI(s)" id="12345">
+                                <connections>
+                                    <action selector="roiBulkConvert" target="-1" id="12346"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="12925">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>

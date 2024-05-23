@@ -1,5 +1,7 @@
 ## Build instructions
 
+I have adapted the build instructions to work on my Mac M1, since the code needs to be rosseta 2 to run on the M1. VTK wasn't building too so I built it separately and copied it over from my music folder 💀
+
 ### Prerequisites
 
 1. `cmake` and `pkg-config` must be in the system's `PATH` or installed at `/opt/local/bin`.

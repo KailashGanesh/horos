@@ -52,7 +52,12 @@ args+=(-DBUILD_SHARED_LIBS=OFF)
 args+=(-DBUILD_STATIC_LIBS=ON)
 args+=(-DBUILD_TESTING=OFF)
 
-args+=(-DCMAKE_IGNORE_PATH="/opt/local/include;/opt/local/lib")
+#args+=(-DCMAKE_IGNORE_PATH="/opt/local/include;/opt/local/lib")
+args+=(-DCMAKE_LIBRARY_PATH="/usr/local/lib")
+args+=(-DCMAKE_EXE_LINKER_FLAGS="-L/usr/local/lib")
+
+
+
 
 if [ "$CONFIGURATION" = 'Debug' ]; then
     cxxfs+=( -g )

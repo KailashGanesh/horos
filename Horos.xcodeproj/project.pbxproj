@@ -3032,12 +3032,11 @@
 		CEFFFE3D12868F5400D69BB8 /* djdijp2k.cc in Sources */ = {isa = PBXBuildFile; fileRef = CEFFFE3A12868F5400D69BB8 /* djdijp2k.cc */; };
 		DB5961380CAB447B00809190 /* OSIVoxel.h in Headers */ = {isa = PBXBuildFile; fileRef = DB5961360CAB447B00809190 /* OSIVoxel.h */; };
 		DB5961390CAB447B00809190 /* OSIVoxel.m in Sources */ = {isa = PBXBuildFile; fileRef = DB5961370CAB447B00809190 /* OSIVoxel.m */; };
+		EBD60C5D2BCD85B70039A33F /* ViewerController.h in Headers */ = {isa = PBXBuildFile; fileRef = ABE17661056D2659009C93B5 /* ViewerController.h */; };
 		EC9BD81C11EDF349007421B2 /* FlyAssistant.h in Headers */ = {isa = PBXBuildFile; fileRef = EC9BD81A11EDF349007421B2 /* FlyAssistant.h */; };
 		EC9BD81D11EDF349007421B2 /* FlyAssistant.mm in Sources */ = {isa = PBXBuildFile; fileRef = EC9BD81B11EDF349007421B2 /* FlyAssistant.mm */; };
 		F35B0D8F28954862008ABE3E /* FeedbackReporter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F35B0D8E28954830008ABE3E /* FeedbackReporter.framework */; };
 		F35B0D9028954862008ABE3E /* FeedbackReporter.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = F35B0D8E28954830008ABE3E /* FeedbackReporter.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F3C3F0712893A429004B2F61 /* Horos.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = F3C3F0702893A429004B2F61 /* Horos.xcconfig */; };
-		F3D78C9E2892994600148FE5 /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = F3D78C9D2892994600148FE5 /* Config.xcconfig */; };
 		F3E3E6CD289527220037A247 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3E3E6CA289527220037A247 /* UserNotifications.framework */; };
 /* End PBXBuildFile section */
 
@@ -9109,6 +9108,7 @@
 				CE4440F81165D1B70034BF18 /* jinclude8.h in Headers */,
 				CE4440F91165D1B70034BF18 /* jlossls8.h in Headers */,
 				CE4440FA1165D1B70034BF18 /* jlossy8.h in Headers */,
+				EBD60C5D2BCD85B70039A33F /* ViewerController.h in Headers */,
 				CE4440FD1165D1B70034BF18 /* jmemsys8.h in Headers */,
 				CE4440FE1165D1B70034BF18 /* jmorecfg8.h in Headers */,
 				CE4440FF1165D1B70034BF18 /* jpegint8.h in Headers */,
@@ -10075,7 +10075,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastTestingUpgradeCheck = 0730;
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 1340;
 				ORGANIZATIONNAME = "The Horos Project";
 				TargetAttributes = {
 					71A522F72021AB220065793A = {
@@ -10293,7 +10293,6 @@
 				CE5487410989346800CF4C60 /* BrushPalette.tif in Resources */,
 				CE54877A0989363200CF4C60 /* Brush.tif in Resources */,
 				CEDCDD5B099C8AA20026AA4B /* ROIManager.pdf in Resources */,
-				F3D78C9E2892994600148FE5 /* Config.xcconfig in Resources */,
 				ABEF846A09A23EF5006CEC3E /* ReportTemplate.doc in Resources */,
 				AB46648D09A331DF005A2766 /* Report.icns in Resources */,
 				AB9DCD7B09A9C47800AA19E7 /* ReportTemplate.rtf in Resources */,
@@ -10526,7 +10525,6 @@
 				A9701A7015C958020019EE55 /* burn_iris10.tif in Resources */,
 				A9701A7215C958020019EE55 /* burn_iris11.tif in Resources */,
 				A9701A7415C958020019EE55 /* burn_iris12.tif in Resources */,
-				F3C3F0712893A429004B2F61 /* Horos.xcconfig in Resources */,
 				A9701A7615C958020019EE55 /* burn_iris13.tif in Resources */,
 				A9701A7815C958020019EE55 /* burn_iris14.tif in Resources */,
 				CE2AC2681830BEFB00C2B67B /* ThickSlab.xib in Resources */,
@@ -10871,7 +10869,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "sh \"Horos/Scripts/$TARGET_NAME/Make.sh\"";
+			shellScript = "sh \"Horos/Scripts/$TARGET_NAME/Make.sh\"\n";
 		};
 		71BC461D1F27308D00FD6CCF /* Copy Horos Framework */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -13355,16 +13353,26 @@
 			baseConfigurationReference = F3D78C9D2892994600148FE5 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = x86_64;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_LINK_OBJC_RUNTIME = NO;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -13372,6 +13380,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				"EXCLUDED_ARCHS[sdk=macosx*]" = arm64;
 				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -13386,6 +13395,9 @@
 				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				IBC_FLATTEN_NIBS = YES;
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-fvisibility=default";
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				SDKROOT = macosx;
@@ -13399,9 +13411,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F3C3F0702893A429004B2F61 /* Horos.xcconfig */;
 			buildSettings = {
+				ARCHS = x86_64;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = Horos/Horos.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8MTH6DY87C;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -13457,7 +13472,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F3C3F0702893A429004B2F61 /* Horos.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Development";
+				ARCHS = x86_64;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_IDENTITY = "-";
+				DEVELOPMENT_TEAM = 8MTH6DY87C;
 				DYLIB_COMPATIBILITY_VERSION = 1.0.0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DCM Framework/prefix.pch";
@@ -13487,6 +13505,8 @@
 		43E98D1D1A32BF6A001B9E51 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = x86_64;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "Unzip Binaries";
 			};
 			name = Release;
@@ -13494,6 +13514,8 @@
 		43E98D201A32BF6A001B9E51 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = x86_64;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = Documentation;
 			};
 			name = Release;
@@ -13502,11 +13524,15 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F3C3F0702893A429004B2F61 /* Horos.xcconfig */;
 			buildSettings = {
+				ARCHS = x86_64;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = Decompress/Decompress.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 20201201;
+				DEVELOPMENT_TEAM = 8MTH6DY87C;
 				ENABLE_HARDENED_RUNTIME = YES;
+				"EXCLUDED_ARCHS[sdk=*]" = arm64;
 				FRAMEWORK_SEARCH_PATHS = Binaries;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Decompress/prefix.pch;
@@ -13516,6 +13542,7 @@
 					$CONFIGURATION_TEMP_DIR/GDCM.build/Install/wlib,
 					$CONFIGURATION_TEMP_DIR/Grok.build/Install/lib,
 					$CONFIGURATION_TEMP_DIR/CharLS.build/Install/lib,
+					/usr/local/lib,
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -13534,8 +13561,11 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F3C3F0702893A429004B2F61 /* Horos.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Development";
+				ARCHS = x86_64;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8MTH6DY87C;
 				DYLIB_COMPATIBILITY_VERSION = 1.0.0;
 				INFOPLIST_FILE = "$(SRCROOT)/API/Info.plist";
 				INSTALL_PATH = "@executable_path/../Frameworks";
@@ -13548,6 +13578,8 @@
 		5F1E2A702411AE7E00365A0C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = x86_64;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -13555,6 +13587,8 @@
 		5F1E2A712411AE7E00365A0C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = x86_64;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -13562,6 +13596,8 @@
 		71A522F92021AB230065793A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = x86_64;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -13569,6 +13605,8 @@
 		71A522FA2021AB230065793A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = x86_64;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -13576,6 +13614,8 @@
 		71A523102021D1B60065793A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = x86_64;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -13583,6 +13623,8 @@
 		71A523112021D1B60065793A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = x86_64;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -13590,6 +13632,8 @@
 		71A5231E2021D2B50065793A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = x86_64;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -13597,6 +13641,8 @@
 		71A5231F2021D2B50065793A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = x86_64;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -13604,6 +13650,8 @@
 		71A5232C2021D3420065793A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = x86_64;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -13611,6 +13659,8 @@
 		71A5232D2021D3420065793A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = x86_64;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -13618,6 +13668,8 @@
 		71A523362021DB180065793A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = x86_64;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -13625,6 +13677,8 @@
 		71A523372021DB180065793A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = x86_64;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -13632,6 +13686,8 @@
 		71A5234620220F780065793A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = x86_64;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -13639,6 +13695,8 @@
 		71A5234720220F780065793A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = x86_64;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -13646,6 +13704,8 @@
 		71E6C0B11FBAD31E00FF75B6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = x86_64;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = $TARGET_NAME;
 			};
 			name = Debug;
@@ -13653,6 +13713,8 @@
 		71E6C0B21FBAD31E00FF75B6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = x86_64;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = $TARGET_NAME;
 			};
 			name = Release;
@@ -13661,7 +13723,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F3C3F0702893A429004B2F61 /* Horos.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Development";
+				ARCHS = x86_64;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_IDENTITY = "-";
+				DEVELOPMENT_TEAM = 8MTH6DY87C;
 				DYLIB_COMPATIBILITY_VERSION = 1.0.0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DCM Framework/prefix.pch";
@@ -13692,9 +13757,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F3C3F0702893A429004B2F61 /* Horos.xcconfig */;
 			buildSettings = {
+				ARCHS = x86_64;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = Horos/Horos.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8MTH6DY87C;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -13736,8 +13804,9 @@
 					"-framework",
 					FeedbackReporter,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "$(PRODUCT_BUNDLE_IDENTIFIER_PREFIX).horos";
+				PRODUCT_BUNDLE_IDENTIFIER = org.horosproject.horos1;
 				PRODUCT_NAME = Horos;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = NO;
 				SYSTEM_HEADER_SEARCH_PATHS = "$CONFIGURATION_TEMP_DIR/Grok.build/Install/include $CONFIGURATION_TEMP_DIR/GDCM.build/Install/include $CONFIGURATION_TEMP_DIR/OpenSSL.build/Install/include $CONFIGURATION_TEMP_DIR/CharLS.build/Install/include $CONFIGURATION_TEMP_DIR/ITK.build/Install/include $CONFIGURATION_TEMP_DIR/VTK.build/Install/include";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) Binaries/dcmtk-source";
@@ -13747,6 +13816,8 @@
 		7E76BED0085757B70073649A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = x86_64;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "Unzip Binaries";
 			};
 			name = Debug;
@@ -13756,16 +13827,26 @@
 			baseConfigurationReference = F3D78C9D2892994600148FE5 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = x86_64;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_LINK_OBJC_RUNTIME = NO;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -13775,6 +13856,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				"EXCLUDED_ARCHS[sdk=macosx*]" = arm64;
 				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -13791,7 +13873,9 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IBC_FLATTEN_NIBS = NO;
-				ONLY_ACTIVE_ARCH = YES;
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-fvisibility=default";
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				OTHER_LDFLAGS = "-Wno-deprecated";
@@ -13805,6 +13889,8 @@
 		9920CBF2202A0BA600FE0A2A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = x86_64;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -13812,6 +13898,8 @@
 		9920CBF3202A0BA600FE0A2A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = x86_64;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -13820,8 +13908,11 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F3C3F0702893A429004B2F61 /* Horos.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Apple Development";
+				ARCHS = x86_64;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8MTH6DY87C;
 				DYLIB_COMPATIBILITY_VERSION = 1.0.0;
 				INFOPLIST_FILE = "$(SRCROOT)/API/Info.plist";
 				INSTALL_PATH = "@executable_path/../Frameworks";
@@ -13835,11 +13926,15 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F3C3F0702893A429004B2F61 /* Horos.xcconfig */;
 			buildSettings = {
+				ARCHS = x86_64;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = Decompress/Decompress.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 20201201;
+				DEVELOPMENT_TEAM = 8MTH6DY87C;
 				ENABLE_HARDENED_RUNTIME = YES;
+				"EXCLUDED_ARCHS[sdk=*]" = arm64;
 				FRAMEWORK_SEARCH_PATHS = Binaries;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Decompress/prefix.pch;
@@ -13848,6 +13943,7 @@
 					Binaries/Ming,
 					$CONFIGURATION_TEMP_DIR/GDCM.build/Install/wlib,
 					$CONFIGURATION_TEMP_DIR/Grok.build/Install/lib,
+					/usr/local/lib,
 					$CONFIGURATION_TEMP_DIR/CharLS.build/Install/lib,
 				);
 				OTHER_LDFLAGS = (
@@ -13866,6 +13962,8 @@
 		BF7486A60CC6AA5D00198387 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = x86_64;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = Documentation;
 			};
 			name = Debug;
@@ -13873,6 +13971,8 @@
 		F35B0D86289535B6008ABE3E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = x86_64;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -13880,6 +13980,8 @@
 		F35B0D87289535B6008ABE3E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = x86_64;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

@@ -11,6 +11,8 @@ hash="$(git describe --always --tags --dirty) $(md5 -q "$path")-$(md5 -qs "$env"
 set -e; set -o xtrace
 
 source_dir="$PROJECT_DIR/$TARGET_NAME"
+link_directories="/usr/local/lib"  # Add this line
+
 cmake_dir="$TARGET_TEMP_DIR/CMake"
 install_dir="$TARGET_TEMP_DIR/Install"
 
@@ -96,4 +98,3 @@ echo "$hash" > "$cmake_dir/.cmakehash"
 echo "$env" > "$cmake_dir/.cmakeenv"
 
 exit 0
-

@@ -631,7 +631,7 @@ enum
 - (IBAction) subCtrlOffset:(id) sender;
 - (IBAction) subCtrlSliders:(id) sender;
 - (int) threeTestsFivePosibilities: (int) f;
-- (void) roiLoadFromSeries: (NSString*) filename;
+- (NSArray *) roiLoadFromSeries: (NSString*) filename;
 - (void) offsetMatrixSetting: (int) twentyFiveCodes;
 - (IBAction) mergeBrushROI: (id) sender;
 - (IBAction) mergeBrushROI: (id) sender ROIs: (NSArray*) s ROIList: (NSMutableArray*) roiList;

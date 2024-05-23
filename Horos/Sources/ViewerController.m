@@ -13936,43 +13936,35 @@ static float oldsetww, oldsetwl;
     [name release];
 }
 
-- (void) roiLoadFromSeries: (NSString*) filename
-{
-    // Unselect all ROIs
-    [self roiSelectDeselectAll: nil];
-    
-    NSArray *roisMovies = [NSUnarchiver unarchiveObjectWithFile: filename];
-    
-    for( int y = 0; y < maxMovieIndex; y++)
-    {
-        if( [roisMovies count] > y)
-        {
-            NSArray *roisSeries = [roisMovies objectAtIndex: y];
-            
-            for( int x = 0; x < [pixList[y] count]; x++)
-            {
-                DCMPix *pic = [pixList[ y] objectAtIndex: x];
-                
-                if( [roisSeries count] > x)
-                {
-                    NSArray *roisImages = [roisSeries objectAtIndex: x];
-                    
-                    for( ROI *r in roisImages)
-                    {
-                        //Correct the origin only if the orientation is the same
+- (NSArray *)roiLoadFromSeries:(NSString *)filename {
+    NSMutableArray *allROIs = [NSMutableArray array];
+    [self roiSelectDeselectAll:nil];
+
+    NSArray *roisMovies = [NSUnarchiver unarchiveObjectWithFile:filename];
+
+    for (int y = 0; y < maxMovieIndex; y++) {
+        if ([roisMovies count] > y) {
+            NSArray *roisSeries = [roisMovies objectAtIndex:y];
+
+            for (int x = 0; x < [pixList[y] count]; x++) {
+                DCMPix *pic = [pixList[y] objectAtIndex:x];
+
+                if ([roisSeries count] > x) {
+                    NSArray *roisImages = [roisSeries objectAtIndex:x];
+
+                    for (ROI *r in roisImages) {
                         r.pix = pic;
-                        
-                        [r setOriginAndSpacing: pic.pixelSpacingX :pic.pixelSpacingY :[DCMPix originCorrectedAccordingToOrientation: pic]];
-                        
-                        [[roiList[ y] objectAtIndex: x] addObject: r];
-                        [imageView roiSet: r];
+                        [r setOriginAndSpacing:pic.pixelSpacingX :pic.pixelSpacingY :[DCMPix originCorrectedAccordingToOrientation:pic]];
+                        [[roiList[y] objectAtIndex:x] addObject:r];
+                        [imageView roiSet:r];
+                        [allROIs addObject:r];
                     }
                 }
             }
         }
     }
-    
-    [imageView setIndex: [imageView curImage]];
+    [imageView setIndex:[imageView curImage]];
+    return allROIs;
 }
 
 - (IBAction) roiLoadFromFiles: (id) sender

@@ -377,8 +377,28 @@
     
     [d setObject: ROIPoints forKey:@"ROIPoints"];
     
-    if( [r dataString])
-        [d setObject:[r dataString] forKey:@"DataSummary"];
+//    if( [r dataString])
+//        [d setObject:[r dataString] forKey:@"DataSummary"];
+    
+    // Assuming 'r' is your ROI object and 'd' is the NSMutableDictionary
+    for (int i = 1; i <= 5; i++) {
+        NSString *key = [NSString stringWithFormat:@"textualBoxLine%d", i];
+        NSString *value = [r valueForKey:key];
+
+        if (value != nil && [value length] > 0) {
+            // Assuming the format is "Key: Value"
+            NSArray *components = [value componentsSeparatedByString:@": "];
+            if ([components count] == 2) {
+                NSString *dataKey = [(NSString *)[components objectAtIndex:0] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]; // Ensure no leading/trailing whitespace
+                NSString *dataValue = [(NSString *)[components objectAtIndex:1] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]; // Ensure no leading/trailing whitespace
+
+                // Add the raw value to dictionary 'd'
+                [d setObject:dataValue forKey:dataKey];
+            }
+        }
+    }
+
+
     
     if( [r dataValues])
         [d setObject:[r dataValues] forKey:@"DataValues"];
@@ -418,44 +438,71 @@
 
 - (IBAction)exportData:(id)sender {
     NSOpenPanel *openPanel = [NSOpenPanel openPanel];
-    openPanel.allowedFileTypes = @[@"roi", @"rois_series"];
-    openPanel.prompt = NSLocalizedString(@"Open ROI File", @"");
+    openPanel.prompt = NSLocalizedString(@"Select ROI Directory", @"");
+    openPanel.canChooseFiles = NO;
+    openPanel.canChooseDirectories = YES;
 
     if ([openPanel runModal] != NSModalResponseOK) return;
 
-    NSString *filePath = openPanel.URL.path;
-    NSString *fileExtension = [filePath pathExtension];
-    NSArray *roiDataArray = nil;
+    NSString *directoryPath = [openPanel.URL path];
+    NSError *error = nil;
+    NSArray *directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:directoryPath error:&error];
 
-    if ([fileExtension isEqualToString:@"roi"]) {
-        roiDataArray = [NSUnarchiver unarchiveObjectWithFile:filePath];
-        // Assuming the .roi files return ROI objects, not dictionaries
-        NSMutableArray *xmlArray = [NSMutableArray array];
-        for (ROI *roi in roiDataArray) {
-            NSMutableDictionary *roiDict = [NSMutableDictionary dictionary];
-            [ROIWindow addROIValues:roi dictionary:roiDict];
-            [xmlArray addObject:roiDict];
-        }
-        roiDataArray = xmlArray; // Update roiDataArray with the processed dictionaries
-    } else if ([fileExtension isEqualToString:@"rois_series"]) {
-        // Use the simplified loading method
-        roiDataArray = [self roiLoadSimpleFromSeries:filePath];
-        // Assuming these are already dictionaries, no further transformation needed
-    }
-
-    if (!roiDataArray || roiDataArray.count == 0) {
-        NSRunAlertPanel(NSLocalizedString(@"Error", @""), NSLocalizedString(@"No ROIs found or unsupported file type.", @""), NSLocalizedString(@"OK", @""), nil, nil);
+    if (error) {
+        NSLog(@"Error reading directory: %@, %@", directoryPath, error.localizedDescription);
+        NSRunAlertPanel(NSLocalizedString(@"Error", @""), NSLocalizedString(@"Failed to read the directory: %@", @""), NSLocalizedString(@"OK", @""), nil, nil, error.localizedDescription);
         return;
     }
 
-    NSString *xmlPath = [[filePath stringByDeletingPathExtension] stringByAppendingString:@".xml"];
-    NSDictionary *xmlDict = @{@"ROIArray": roiDataArray};
-    BOOL success = [xmlDict writeToURL:[NSURL fileURLWithPath:xmlPath] atomically:YES];
+    NSInteger successCount = 0;
+    NSInteger totalCount = 0;
 
-    if (success) {
-        NSRunInformationalAlertPanel(NSLocalizedString(@"Export Successful", @""), @"%@", [NSString stringWithFormat:NSLocalizedString(@"XML file saved as %@", @""), xmlPath], NSLocalizedString(@"OK", @""), nil, nil);
+    for (NSString *fileName in directoryContents) {
+        NSString *fullPath = [directoryPath stringByAppendingPathComponent:fileName];
+        NSString *fileExtension = [fullPath pathExtension];
+
+        if ([fileExtension isEqualToString:@"roi"] || [fileExtension isEqualToString:@"rois_series"]) {
+            NSArray *roiDataArray = nil;
+
+            if ([fileExtension isEqualToString:@"roi"]) {
+                roiDataArray = [NSUnarchiver unarchiveObjectWithFile:fullPath];
+                NSMutableArray *xmlArray = [NSMutableArray array];
+                for (ROI *roi in roiDataArray) {
+                    NSMutableDictionary *roiDict = [NSMutableDictionary dictionary];
+                    [ROIWindow addROIValues:roi dictionary:roiDict];
+                    [xmlArray addObject:roiDict];
+                    
+                    // Log the final values to be written to XML
+                    NSLog(@"Writing to XML - AreaCM2: %@", [roiDict objectForKey:@"AreaCM2"]);
+                    NSLog(@"Writing to XML - Mean: %@", [roiDict objectForKey:@"Mean"]);
+                    NSLog(@"Writing to XML - Dev: %@", [roiDict objectForKey:@"Dev"]);
+                    NSLog(@"Writing to XML - Total: %@", [roiDict objectForKey:@"Total"]);
+                    NSLog(@"Writing to XML - Min: %@", [roiDict objectForKey:@"Min"]);
+                    NSLog(@"Writing to XML - Max: %@", [roiDict objectForKey:@"Max"]);
+                    NSLog(@"Writing to XML - Length: %@", [roiDict objectForKey:@"Length"]);
+                }
+                roiDataArray = xmlArray;
+            } else if ([fileExtension isEqualToString:@"rois_series"]) {
+                roiDataArray = [self roiLoadSimpleFromSeries:fullPath];
+            }
+
+            if (roiDataArray && roiDataArray.count > 0) {
+                NSString *xmlPath = [[fullPath stringByDeletingPathExtension] stringByAppendingString:@".xml"];
+                NSDictionary *xmlDict = @{@"ROIArray": roiDataArray};
+                BOOL success = [xmlDict writeToURL:[NSURL fileURLWithPath:xmlPath] atomically:YES];
+
+                if (success) {
+                    successCount++;
+                }
+            }
+            totalCount++;
+        }
+    }
+
+    if (totalCount > 0) {
+        NSRunInformationalAlertPanel(NSLocalizedString(@"Export Complete", @""), @"%@", [NSString stringWithFormat:NSLocalizedString(@"%ld out of %ld files have been converted to XML.", @""), successCount, totalCount], NSLocalizedString(@"OK", @""), nil, nil);
     } else {
-        NSRunAlertPanel(NSLocalizedString(@"Error", @""), NSLocalizedString(@"Failed to save the XML file.", @""), NSLocalizedString(@"OK", @""), nil, nil);
+        NSRunAlertPanel(NSLocalizedString(@"Error", @""), NSLocalizedString(@"No suitable ROI or ROI series files found.", @""), NSLocalizedString(@"OK", @""), nil, nil);
     }
 }
 
